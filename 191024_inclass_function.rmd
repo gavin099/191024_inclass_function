@@ -1,0 +1,66 @@
+---
+title: "191024_inclass"
+author: "Gavin Ko"
+date: "10/24/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+```
+
+Write some functions.
+
+```{r}
+set.seed(1)
+x = rnorm(n = 30, mean = 4, sd = 2.3)
+x_again = rnorm(n = 30, mean = 2, sd = 1.6)
+y = rnorm(n = 30, mean = 1.58, sd = 1.58)
+
+
+z = (x - mean(x)) / sd(x)
+z_again = (x_again - mean(x_again)) / sd(x_again)
+
+```
+
+So complicated, let's write function instead.
+
+```{r}
+# input in the first parenthesis
+z_score = function(x) {
+  
+# conditional execution, make sure it breaks at the right time
+  if (!is.numeric(x)) {
+    stop("you are doing something wrong")
+  } else if (length(x) <= 3) {
+    stop("hey the data length is too small")
+  }
+  
+  (x - mean(x)) / sd(x)
+}
+
+z_score(c(1,2,3))
+z_score(x_again)
+z_score(y)
+```
+
+Test another function.
+```{r}
+mean_sd_function = function(input_x) {
+  if (!is.numeric(x)) {
+  stop("you are doing something wrong")
+  } else if (length(x) <= 3) {
+    stop("hey the data length is too small")
+    }
+  list(
+  mean_x = mean(input_x),
+  sd_x = sd(input_x),
+  zscore = (input_x - mean(input_x)) / sd(input_x) )
+}
+
+mean_sd_function(y)
+
+```
+
