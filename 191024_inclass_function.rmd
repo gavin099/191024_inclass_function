@@ -41,7 +41,6 @@ z_score = function(x) {
   (x - mean(x)) / sd(x)
 }
 
-z_score(c(1,2,3))
 z_score(x_again)
 z_score(y)
 ```
@@ -49,18 +48,53 @@ z_score(y)
 Test another function.
 ```{r}
 mean_sd_function = function(input_x) {
+  
   if (!is.numeric(x)) {
   stop("you are doing something wrong")
+  
   } else if (length(x) <= 3) {
     stop("hey the data length is too small")
     }
+  
   list(
   mean_x = mean(input_x),
   sd_x = sd(input_x),
   zscore = (input_x - mean(input_x)) / sd(input_x) )
+  
 }
 
 mean_sd_function(y)
 
 ```
+
+Multiple inputs
+
+```{r}
+# we can set default settings for each value
+sim_regression = function(n = 30, beta0 = 2, beta1 = 3) {
+  
+  sim_data = tibble(
+    x = rnorm(n, mean = 1, sd = 1),
+    y = beta0 + beta1 * x + rnorm(n, mean = 0, sd = 1)
+  )
+
+  ls_fit = lm(y ~ x, data = sim_data)
+
+  tibble(
+  beta0_hat = coef(ls_fit)[1], # for intercept
+  beta1_hat = coef(ls_fit)[2]  # for the first coefficient
+  )
+  
+}
+
+sim_regression(n = 14, beta0 = 24)
+```
+
+
+
+
+
+
+
+
 
